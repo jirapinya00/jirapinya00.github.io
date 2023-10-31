@@ -51,23 +51,45 @@
         <hr>
         <h3>รายการสินค้าที่เลือก:</h3>
         <ul id="cart-list"></ul>
+        <hr>
+        <p>รวมราคาสินค้า: <span id="subtotal">0 บาท</span></p>
+        <p>ภาษี 7%: <span id="tax">0 บาท</span></p>
+        <p>รวมทั้งสิ้น: <span id="total">0 บาท</span></p>
     </div>
     
     <script>
+        var cart = [];
+        var subtotal = 0;
+        var taxRate = 0.07;
+
         function addToCart() {
             var productName = document.getElementById('product-name').value;
-            var productPrice = document.getElementById('product-price').value;
-            var cartList = document.getElementById('cart-list');
-            
-            if (productName && productPrice) {
-                var listItem = document.createElement('li');
-                listItem.innerHTML = productName + ': ' + productPrice + ' บาท';
-                cartList.appendChild(listItem);
-                
-                // Clear input fields
-                document.getElementById('product-name').value = '';
-                document.getElementById('product-price').value = '';
+            var productPrice = parseFloat(document.getElementById('product-price').value);
+
+            if (productName && !isNaN(productPrice)) {
+                cart.push({ name: productName, price: productPrice });
+                updateCart();
             }
+        }
+
+        function updateCart() {
+            var cartList = document.getElementById('cart-list');
+            cartList.innerHTML = '';
+
+            subtotal = 0;
+            cart.forEach(function (item) {
+                var listItem = document.createElement('li');
+                listItem.innerHTML = item.name + ': ' + item.price.toFixed(2) + ' บาท';
+                cartList.appendChild(listItem);
+                subtotal += item.price;
+            });
+
+            var tax = subtotal * taxRate;
+            var total = subtotal + tax;
+
+            document.getElementById('subtotal').textContent = subtotal.toFixed(2) + ' บาท';
+            document.getElementById('tax').textContent = tax.toFixed(2) + ' บาท';
+            document.getElementById('total').textContent = total.toFixed(2) + ' บาท';
         }
     </script>
 </body>
