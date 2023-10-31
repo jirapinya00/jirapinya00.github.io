@@ -44,25 +44,6 @@
             background-color: #2980b9;
         }
     </style>
-    <script>
-        function clearDisplay() {
-            document.getElementById('result').value = '';
-        }
-
-        function calculate() {
-            try {
-                var expression = document.getElementById('result').value;
-                var result = eval(expression);
-                document.getElementById('result').value = result;
-            } catch (error) {
-                document.getElementById('result').value = 'Error';
-            }
-        }
-
-        function appendCharacter(character) {
-            document.getElementById('result').value += character;
-        }
-    </script>
 </head>
 <body>
     <div class="calculator">
@@ -70,8 +51,8 @@
         <div class="row">
             <button class="button" onclick="appendCharacter('+')">+</button>
             <button class="button" onclick="appendCharacter('-')">-</button>
-            <button class="button" onclick="appendCharacter('*')">&#215;</button>
-            <button class="button" onclick="appendCharacter('/')">&#247;</button>
+            <button class="button" onclick="appendCharacter('×')">×</button>
+            <button class="button" onclick="appendCharacter('÷')">÷</button>
         </div>
         <div class="row">
             <button class="button" onclick="appendCharacter('7')">7</button>
@@ -95,5 +76,24 @@
             <button class="button" style="flex: 2;" onclick="appendCharacter('0')">0</button>
         </div>
     </div>
+    <script>
+        function clearDisplay() {
+            document.getElementById('result').value = '';
+        }
+
+        function calculate() {
+            try {
+                var expression = document.getElementById('result').value;
+                var result = eval(expression);
+                document.getElementById('result').value = result;
+            } catch (error) {
+                document.getElementById('result').value = 'Error';
+            }
+        }
+
+        function appendCharacter(character) {
+            document.getElementById('result').value += character;
+        }
+    </script>
 </body>
 </html>
