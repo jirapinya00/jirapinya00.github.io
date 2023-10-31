@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cashier System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            text-align: center;
+        }
+
+        .cashier-container {
+            width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: white;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            font-size: 16px;
+        }
+
+        .button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            font-size: 18px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="cashier-container">
+        <h2>ระบบร้านค้า</h2>
+        <label for="product-name">รายการสินค้า:</label>
+        <input type="text" id="product-name" placeholder="ชื่อสินค้า">
+        <label for="product-price">ราคาสินค้า:</label>
+        <input type="text" id="product-price" placeholder="ราคาสินค้า (บาท)">
+        <button class="button" onclick="addToCart()">เพิ่มสินค้า</button>
+        <hr>
+        <h3>รายการสินค้าที่เลือก:</h3>
+        <ul id="cart-list"></ul>
+    </div>
+    
+    <script>
+        function addToCart() {
+            var productName = document.getElementById('product-name').value;
+            var productPrice = document.getElementById('product-price').value;
+            var cartList = document.getElementById('cart-list');
+            
+            if (productName && productPrice) {
+                var listItem = document.createElement('li');
+                listItem.innerHTML = productName + ': ' + productPrice + ' บาท';
+                cartList.appendChild(listItem);
+                
+                // Clear input fields
+                document.getElementById('product-name').value = '';
+                document.getElementById('product-price').value = '';
+            }
+        }
+    </script>
+</body>
+</html>
