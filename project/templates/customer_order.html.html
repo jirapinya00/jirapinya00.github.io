@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+</head>
+<body>
+    <h1>Order Confirmation</h1>
+    <p>Your order for "{{ food_item['name'] }}" has been received!</p>
+    <img src="{{ url_for('static', filename='customer_order_qr.png') }}" alt="Customer Order QR Code">
+</body>
+</html>
