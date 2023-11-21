@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POS System</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="mb-4">Point of Sale System</h1>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Inventory</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Product ID</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product_id, product_info in inventory.items() %}
+                            <tr>
+                                <td>{{ product_id }}</td>
+                                <td>{{ product_info['name'] }}</td>
+                                <td>${{ product_info['price'] }}</td>
+                                <td>{{ product_info['quantity'] }}</td>
+                                <td>
+                                    <form class="add-to-cart-form">
+                                        <input type="number" class="form-control" name="quantity" min="1" max="{{ product_info['quantity'] }}" value="1">
+                                        <input type="hidden" name="product_id" value="{{ product_id }}">
+                                        <button type="button" class="btn btn-primary add-to-cart-btn">Add to Cart</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-md-6">
+                <h2>Shopping Cart</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Product ID</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cart-table-body">
+                        {% for product_id, product_info in cart.items() %}
+                            <tr>
+                                <td>{{ product_id }}</td>
+                                <td>{{ product_info['name'] }}</td>
+                                <td>${{ product_info['price'] }}</td>
+                                <td>{{ product_info['quantity'] }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-danger remove-from-cart-btn" data-product-id="{{ product_id }}">Remove</button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <h3>Total: $<span id="cart-total">{{ total }}</span></h3>
+                <a href="{{ url_for('checkout') }}" class="btn btn-success">Checkout</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $(".add-to-cart-btn").on("click", function () {
+                var form = $(this).closest("form");
+                var formData = form.serialize();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/add_to_cart/" + form.find("[name='product_id']").val(),
+                    data: formData,
+                    success: function () {
+                        location.reload();
+                    }
+                });
+            });
+
+            $(".remove-from-cart-btn").on("click", function () {
+                var productId = $(this).data("product-id");
+
+                $.get("/remove_from_cart/" + productId, function () {
+                    location.reload();
+                });
+            });
+        });
+    </script>
+</body>
+</html>
