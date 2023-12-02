@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>switch by jirapinya</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f5f5f5;
+        }
+
+        .converter {
+            width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: white;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin: 4px 0;
+            font-size: 16px;
+        }
+
+        .button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            font-size: 18px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="converter">
+        <h1>Day of the Week </h1>
+        <label for="dayNumber">กรุณาระบุตัวเลข 1 ถึง 7 :</label>
+        <input type="number" id="dayNumber" min="1" max="7" placeholder="1-7">
+        <button class="button" onclick="Dayweek()">submit</button>
+        <p id="result"></p>
+    </div>
+    
+    <script>
+        function Dayweek() {
+            var dayNumber = parseInt(document.getElementById('dayNumber').value);
+            var resultElement = document.getElementById('result');
+            
+            switch (dayNumber) {
+                case 1:
+                    resultElement.textContent = "วันจันทร์";
+                    break;
+                case 2:
+                    resultElement.textContent = "วันอังคาร";
+                    break;
+                case 3:
+                    resultElement.textContent = "วันพุธ";
+                    break;
+                case 4:
+                    resultElement.textContent = "วันพฤหัสบดี";
+                    break;
+                case 5:
+                    resultElement.textContent = "วันศุกร์";
+                    break;
+                case 6:
+                    resultElement.textContent = "วันเสาร์";
+                    break;
+                case 7:
+                    resultElement.textContent = "วันอาทิตย์";
+                    break;
+                default:
+                    resultElement.textContent = "กรุณาระบุตัวเลข 1 ถึง 7 ";
+            }
+        }
+    </script>
+</body>
+</html>
