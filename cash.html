@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cashier System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            text-align: center;
+        }
+
+        .cashier-container {
+            width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: white;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            font-size: 16px;
+        }
+
+        .button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            font-size: 18px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="cashier-container">
+        <h2>ระบบร้านค้า</h2>
+        <label for="product-name">รายการสินค้า:</label>
+        <input type="text" id="product-name" placeholder="ชื่อสินค้า">
+        <label for="product-price">ราคาสินค้า:</label>
+        <input type="text" id="product-price" placeholder="ราคาสินค้า (บาท)">
+        <button class="button" onclick="addToCart()">เพิ่มสินค้า</button>
+        <hr>
+        <h3>รายการสินค้าที่เลือก:</h3>
+        <ul id="cart-list"></ul>
+        <hr>
+        <p>รวมราคาสินค้า: <span id="subtotal">0 บาท</span></p>
+        <p>ภาษี 7%: <span id="tax">0 บาท</span></p>
+        <p>รวมทั้งสิ้น: <span id="total">0 บาท</span></p>
+    </div>
+    
+    <script>
+        var cart = [];
+        var subtotal = 0;
+        var taxRate = 0.07;
+
+        function addToCart() {
+            var productName = document.getElementById('product-name').value;
+            var productPrice = parseFloat(document.getElementById('product-price').value);
+
+            if (productName && !isNaN(productPrice)) {
+                cart.push({ name: productName, price: productPrice });
+                updateCart();
+            }
+        }
+
+        function updateCart() {
+            var cartList = document.getElementById('cart-list');
+            cartList.innerHTML = '';
+
+            subtotal = 0;
+            cart.forEach(function (item) {
+                var listItem = document.createElement('li');
+                listItem.innerHTML = item.name + ': ' + item.price.toFixed(2) + ' บาท';
+                cartList.appendChild(listItem);
+                subtotal += item.price;
+            });
+
+            var tax = subtotal * taxRate;
+            var total = subtotal + tax;
+
+            document.getElementById('subtotal').textContent = subtotal.toFixed(2) + ' บาท';
+            document.getElementById('tax').textContent = tax.toFixed(2) + ' บาท';
+            document.getElementById('total').textContent = total.toFixed(2) + ' บาท';
+        }
+    </script>
+</body>
+</html>
